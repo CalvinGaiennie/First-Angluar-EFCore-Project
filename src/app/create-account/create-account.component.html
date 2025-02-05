@@ -10,7 +10,23 @@
       type="email"
       formControlName="email"
       class="form-control"
+      [class.is-invalid]="
+        createAccountForm.get('email')?.invalid &&
+        createAccountForm.get('email')?.touched
+      "
     />
+    <div
+      class="invalid-feedback"
+      *ngIf="createAccountForm.get('email')?.errors?.['required']"
+    >
+      Email is required
+    </div>
+    <div
+      class="invalid-feedback"
+      *ngIf="createAccountForm.get('email')?.errors?.['email']"
+    >
+      Please enter a valid email
+    </div>
   </div>
   <div class="mb-3">
     <label for="password" class="form-label">Password:</label>
@@ -19,7 +35,23 @@
       type="password"
       formControlName="password"
       class="form-control"
+      [class.is-invalid]="
+        createAccountForm.get('password')?.invalid &&
+        createAccountForm.get('password')?.touched
+      "
     />
+    <div
+      class="invalid-feedback"
+      *ngIf="createAccountForm.get('password')?.errors?.['required']"
+    >
+      Password is required
+    </div>
+    <div
+      class="invalid-feedback"
+      *ngIf="createAccountForm.get('password')?.errors?.['minlength']"
+    >
+      Password must be at least 6 characters
+    </div>
   </div>
   <div class="mb-3">
     <label for="confirmPassword" class="form-label">Confirm Password:</label>
@@ -28,7 +60,23 @@
       type="password"
       formControlName="confirmPassword"
       class="form-control"
+      [class.is-invalid]="
+        createAccountForm.get('confirmPassword')?.invalid &&
+        createAccountForm.get('confirmPassword')?.touched
+      "
     />
+    <div
+      class="invalid-feedback"
+      *ngIf="createAccountForm.get('confirmPassword')?.errors?.['required']"
+    >
+      Please confirm your password
+    </div>
   </div>
-  <button type="submit" class="btn btn-primary">Create Account</button>
+  <button
+    type="submit"
+    class="btn btn-primary"
+    [disabled]="!createAccountForm.valid"
+  >
+    Create Account
+  </button>
 </form>

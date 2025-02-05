@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyBackend.Data
 {
@@ -8,14 +9,15 @@ namespace MyBackend.Data
             : base(options)
         { }
 
-        public DbSet<User> Users { get; set; } // Example DbSet
+        public DbSet<Account> Accounts { get; set; }
     }
 
     // Example of a model class
-    public class User
+    public class Account
     {
+        [Key]
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
+        public required string Email { get; set; }
+        public required string Password { get; set; }
     }
 }

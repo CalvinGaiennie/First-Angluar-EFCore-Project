@@ -1,10 +1,17 @@
 import { Component } from '@angular/core';
+import { EmailListComponent } from './email-list/email-list.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
+import { HttpClientModule } from '@angular/common/http';
+
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
   standalone: true,
-  imports: [CreateAccountComponent],
+  imports: [EmailListComponent, CreateAccountComponent, HttpClientModule],
+  template: `
+    <div class="container">
+      <app-create-account></app-create-account>
+      <app-email-list></app-email-list>
+    </div>
+  `,
 })
 export class AppComponent {}
