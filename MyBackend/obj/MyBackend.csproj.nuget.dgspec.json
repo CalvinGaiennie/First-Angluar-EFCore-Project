@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/calvingaiennie/Documents/GitHub/angular-course-hotel-app/MyBackend/MyBackend.csproj": {}
+    "/Users/calvingaiennie/Documents/GitHub/First-Angular-EFCore-Project/MyBackend/MyBackend.csproj": {}
   },
   "projects": {
-    "/Users/calvingaiennie/Documents/GitHub/angular-course-hotel-app/MyBackend/MyBackend.csproj": {
+    "/Users/calvingaiennie/Documents/GitHub/First-Angular-EFCore-Project/MyBackend/MyBackend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/calvingaiennie/Documents/GitHub/angular-course-hotel-app/MyBackend/MyBackend.csproj",
+        "projectUniqueName": "/Users/calvingaiennie/Documents/GitHub/First-Angular-EFCore-Project/MyBackend/MyBackend.csproj",
         "projectName": "MyBackend",
-        "projectPath": "/Users/calvingaiennie/Documents/GitHub/angular-course-hotel-app/MyBackend/MyBackend.csproj",
+        "projectPath": "/Users/calvingaiennie/Documents/GitHub/First-Angular-EFCore-Project/MyBackend/MyBackend.csproj",
         "packagesPath": "/Users/calvingaiennie/.nuget/packages/",
-        "outputPath": "/Users/calvingaiennie/Documents/GitHub/angular-course-hotel-app/MyBackend/obj/",
+        "outputPath": "/Users/calvingaiennie/Documents/GitHub/First-Angular-EFCore-Project/MyBackend/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/calvingaiennie/.nuget/NuGet/NuGet.Config"
