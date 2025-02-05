@@ -1,1 +1,22 @@
-<app-create-account></app-create-account>
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+  <div class="container">
+    <a class="navbar-brand" href="#">Hotel App</a>
+    <div class="navbar-nav">
+      <a class="nav-link" routerLink="/login" routerLinkActive="active"
+        >Login</a
+      >
+      <a class="nav-link" routerLink="/create-account" routerLinkActive="active"
+        >Create Account</a
+      >
+      <a class="nav-link" routerLink="/email-list" routerLinkActive="active"
+        >Email List</a
+      >
+      <a class="nav-link" routerLink="/main-page" routerLinkActive="active"
+        >Main Page</a
+      >
+    </div>
+  </div>
+</nav>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>

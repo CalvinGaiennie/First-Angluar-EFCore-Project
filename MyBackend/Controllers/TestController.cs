@@ -43,6 +43,23 @@ public class TestController : ControllerBase
             email = request.Email 
         });
     }
+
+    [HttpPost("login")]
+    public IActionResult Login([FromBody] LoginDto request)
+    {
+        var account = _context.Accounts
+            .FirstOrDefault(a => a.Email == request.Email && a.Password == request.Password);
+
+        if (account == null)
+        {
+            return Unauthorized("Invalid email or password");
+        }
+
+        return Ok(new { 
+            message = "Login successful",
+            email = account.Email 
+        });
+    }
 }
 
 public class CreateAccountDto
@@ -50,4 +67,10 @@ public class CreateAccountDto
     public string Email { get; set; }
     public string Password { get; set; }
     public string ConfirmPassword { get; set; }
+}
+
+public class LoginDto
+{
+    public string Email { get; set; }
+    public string Password { get; set; }
 }
