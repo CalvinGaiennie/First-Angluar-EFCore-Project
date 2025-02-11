@@ -28,9 +28,20 @@ export class MainPageComponent {
 
   public barChartOptions: ChartConfiguration<'bar'>['options'] = {
     responsive: true,
+    maintainAspectRatio: false,
     scales: {
       y: {
         beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Number of Orders',
+        },
+      },
+      x: {
+        title: {
+          display: true,
+          text: 'Date',
+        },
       },
     },
   };
@@ -38,18 +49,23 @@ export class MainPageComponent {
   constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
-    this.http
-      .get<{ labels: string[]; data: number[] }>('assets/output.json')
-      .subscribe({
-        next: (jsonData) => {
-          console.log('Fetched Data:', jsonData); // Debugging
+    this.http.get<any[]>('assets/output.json').subscribe({
+      next: (orders) => {
+        // Group orders by date and count them
+        const ordersByDate = orders.reduce((acc, order) => {
+          const date = order.Date;
+          acc[date] = (acc[date] || 0) + 1;
+          return acc;
+        }, {});
 
-          if (jsonData.labels && jsonData.data) {
-            this.barChartData.labels = jsonData.labels ?? []; // Ensure it's never undefined
-            this.barChartData.datasets[0].data = jsonData.data ?? [];
-          }
-        },
-        error: (err) => console.error('Error fetching data:', err),
-      });
+        // Transform data for the chart
+        this.barChartData.labels = Object.keys(ordersByDate);
+        this.barChartData.datasets[0].data = Object.values(ordersByDate);
+
+        // Force change detection
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Error fetching data:', err),
+    });
   }
 }
