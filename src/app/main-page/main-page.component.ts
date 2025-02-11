@@ -13,14 +13,39 @@ import { ChangeDetectorRef } from '@angular/core';
   styleUrl: './main-page.component.css',
 })
 export class MainPageComponent {
-  public barChartData: ChartConfiguration<'bar'>['data'] = {
+  public ordersByDateChart: ChartConfiguration<'bar'>['data'] = {
     labels: [],
     datasets: [
       {
         data: [],
-        label: 'Orders',
+        label: 'Orders by Date',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderColor: 'rgb(75, 192, 192)',
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  public ordersByStatusChart: ChartConfiguration<'pie'>['data'] = {
+    labels: ['Correct', 'Incorrect'],
+    datasets: [
+      {
+        data: [],
+        backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+        borderColor: ['rgb(75, 192, 192)', 'rgb(255, 99, 132)'],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  public mistakeTypesChart: ChartConfiguration<'bar'>['data'] = {
+    labels: [],
+    datasets: [
+      {
+        data: [],
+        label: 'Types of Mistakes',
+        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+        borderColor: 'rgb(255, 159, 64)',
         borderWidth: 1,
       },
     ],
@@ -32,18 +57,13 @@ export class MainPageComponent {
     scales: {
       y: {
         beginAtZero: true,
-        title: {
-          display: true,
-          text: 'Number of Orders',
-        },
-      },
-      x: {
-        title: {
-          display: true,
-          text: 'Date',
-        },
       },
     },
+  };
+
+  public pieChartOptions: ChartConfiguration<'pie'>['options'] = {
+    responsive: true,
+    maintainAspectRatio: false,
   };
 
   constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
@@ -51,18 +71,49 @@ export class MainPageComponent {
   ngOnInit() {
     this.http.get<any[]>('assets/output.json').subscribe({
       next: (orders) => {
-        // Group orders by date and count them
+        // Process orders by date
         const ordersByDate = orders.reduce((acc, order) => {
           const date = order.Date;
           acc[date] = (acc[date] || 0) + 1;
           return acc;
-        }, {});
+        }, {} as { [key: string]: number });
 
-        // Transform data for the chart
-        this.barChartData.labels = Object.keys(ordersByDate);
-        this.barChartData.datasets[0].data = Object.values(ordersByDate);
+        // Sort dates chronologically
+        const sortedDates = Object.keys(ordersByDate).sort(
+          (a, b) => new Date(a).getTime() - new Date(b).getTime()
+        );
 
-        // Force change detection
+        this.ordersByDateChart.labels = sortedDates;
+        this.ordersByDateChart.datasets[0].data = sortedDates.map(
+          (date) => ordersByDate[date]
+        );
+
+        // Process orders by status
+        const ordersByStatus = orders.reduce((acc, order) => {
+          const status =
+            order.OrderStatus === 'correct' ? 'Correct' : 'Incorrect';
+          acc[status] = (acc[status] || 0) + 1;
+          return acc;
+        }, {} as { [key: string]: number });
+
+        this.ordersByStatusChart.datasets[0].data = [
+          ordersByStatus['Correct'] || 0,
+          ordersByStatus['Incorrect'] || 0,
+        ];
+
+        // Process mistake types
+        const mistakeTypes = orders
+          .filter(
+            (order) => order.OrderStatus === 'incorrect' && order.mistakeType
+          )
+          .reduce((acc, order) => {
+            acc[order.mistakeType] = (acc[order.mistakeType] || 0) + 1;
+            return acc;
+          }, {} as { [key: string]: number });
+
+        this.mistakeTypesChart.labels = Object.keys(mistakeTypes);
+        this.mistakeTypesChart.datasets[0].data = Object.values(mistakeTypes);
+
         this.cdr.detectChanges();
       },
       error: (err) => console.error('Error fetching data:', err),

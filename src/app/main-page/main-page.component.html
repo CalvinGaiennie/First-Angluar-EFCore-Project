@@ -4,12 +4,41 @@
       <h2 class="text-center mb-4">Dashboard</h2>
     </div>
   </div>
-  <div class="row">
+
+  <div class="row mb-4">
     <div class="col-12">
       <div class="chart-container">
+        <h3 class="text-center">Orders by Date</h3>
         <canvas
           baseChart
-          [data]="barChartData"
+          [data]="ordersByDateChart"
+          [options]="barChartOptions"
+          [type]="'bar'"
+        >
+        </canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="chart-container">
+        <h3 class="text-center">Order Status Distribution</h3>
+        <canvas
+          baseChart
+          [data]="ordersByStatusChart"
+          [options]="pieChartOptions"
+          [type]="'pie'"
+        >
+        </canvas>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="chart-container">
+        <h3 class="text-center">Types of Mistakes</h3>
+        <canvas
+          baseChart
+          [data]="mistakeTypesChart"
           [options]="barChartOptions"
           [type]="'bar'"
         >
