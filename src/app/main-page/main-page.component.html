@@ -2,89 +2,18 @@
   <div class="row">
     <div class="col-12">
       <h2 class="text-center mb-4">Dashboard</h2>
-
-      <div *ngIf="isLoading" class="text-center">
-        <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </div>
-
-      <div *ngIf="error" class="alert alert-danger">
-        {{ error }}
-      </div>
-
-      <div *ngIf="!isLoading && !error" class="row">
-        <!-- Error Types Chart -->
-        <div class="col-md-6 mb-4">
-          <div class="card">
-            <div class="card-body">
-              <h3 class="card-title">Error Types Distribution</h3>
-              <div class="chart-container" style="height: 250px">
-                <canvas
-                  baseChart
-                  [type]="'bar'"
-                  [data]="errorTypeChart"
-                  [options]="chartOptions"
-                >
-                </canvas>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Order Status Chart -->
-        <div class="col-md-6 mb-4">
-          <div class="card">
-            <div class="card-body">
-              <h3 class="card-title">Order Status Distribution</h3>
-              <div class="chart-container" style="height: 250px">
-                <canvas
-                  baseChart
-                  [type]="'bar'"
-                  [data]="orderStatusChart"
-                  [options]="chartOptions"
-                >
-                </canvas>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Checker Performance Chart -->
-        <div class="col-md-6 mb-4">
-          <div class="card">
-            <div class="card-body">
-              <h3 class="card-title">Orders by Checker</h3>
-              <div class="chart-container" style="height: 250px">
-                <canvas
-                  baseChart
-                  [type]="'bar'"
-                  [data]="checkerPerformanceChart"
-                  [options]="chartOptions"
-                >
-                </canvas>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Checker Error Catch Chart -->
-        <div class="col-md-6 mb-4">
-          <div class="card">
-            <div class="card-body">
-              <h3 class="card-title">Errors Caught by Checker</h3>
-              <div class="chart-container" style="height: 250px">
-                <canvas
-                  baseChart
-                  [type]="'bar'"
-                  [data]="checkerErrorCatchChart"
-                  [options]="chartOptions"
-                >
-                </canvas>
-              </div>
-            </div>
-          </div>
-        </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="chart-container">
+        <canvas
+          baseChart
+          [data]="barChartData"
+          [options]="barChartOptions"
+          [type]="'bar'"
+        >
+        </canvas>
       </div>
     </div>
   </div>

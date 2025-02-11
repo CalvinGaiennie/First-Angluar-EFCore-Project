@@ -14,18 +14,17 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <div class="navbar-nav">
-        <a class="nav-link" routerLink="/login" routerLinkActive="active"
-          >Login</a
-        >
-        <a
-          class="nav-link"
-          routerLink="/create-account"
-          routerLinkActive="active"
-          >Create Account</a
-        >
-        <a class="nav-link" routerLink="/email-list" routerLinkActive="active"
-          >Email List</a
-        >
+        <ng-container *ngIf="!authService.isAuthenticated()">
+          <a class="nav-link" routerLink="/login" routerLinkActive="active"
+            >Login</a
+          >
+          <a
+            class="nav-link"
+            routerLink="/create-account"
+            routerLinkActive="active"
+            >Create Account</a
+          >
+        </ng-container>
         <a class="nav-link" routerLink="/main-page" routerLinkActive="active"
           >Main Page</a
         >
@@ -34,5 +33,6 @@
   </div>
 </nav>
 <div class="container">
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
   <router-outlet></router-outlet>
 </div>
